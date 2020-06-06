@@ -42,12 +42,14 @@ void Game::Update()
   }
 
   // process ProcessInput
-  int x = -1, y = -1;
-  if (!graphics->ProcessInput(x, y)){isRunning = false;}
-  if (x > 0 && y > 0)
+  int mouseX = -1, mouseY = -1;
+  if (!graphics->ProcessInput(mouseX, mouseY)){isRunning = false;}
+  if (mouseX > 0 && mouseY > 0)
   {
-    board->FireBullet(x, y);
+    board->FireBullet(mouseX, mouseY);
   }
+  // move ship
+
 
   board->CheckCollisions();
 
