@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "Bullet.h"
 #include "Shape.h"
+#include "Player.h"
 #include "Random.h"
 
 #include <iostream>
@@ -11,6 +12,7 @@
 
 class Board {
 private:
+  Player* player;
   float lastShapeSpawnPosition;
   // TODO: make smart pointers
   std::unordered_map<Shape*, Shape*> shapes;
@@ -27,8 +29,10 @@ public:
   void Update(float deltaTime);
   Shape* SpawnShape(Random* random);
   void FireBullet(int x, int y);
+  void MoveShip(int x, int y);
   void CheckCollisions();
 
   std::unordered_map<Shape*, Shape*> GetShapes() const;
   std::unordered_map<Bullet*, Bullet*> GetBullets() const;
+  Player* GetPlayer() const;
 };

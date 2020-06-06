@@ -8,6 +8,7 @@
 Board::Board()
 {
   lastShapeSpawnPosition = 0;
+  player = new Player();
 }
 
 Board::~Board(){}
@@ -29,6 +30,8 @@ void Board::Update(float deltaTime)
       b->Update(deltaTime);
     }
   }
+
+  player->Update(deltaTime);
 }
 
 void Board::FireBullet(int x, int y)
@@ -36,6 +39,13 @@ void Board::FireBullet(int x, int y)
   Bullet* bullet = new Bullet(x, y, BULLET_SIZE);
   bullets[bullet] = bullet;
 }
+
+void Board::MoveShip(int x, int y)
+{
+  // set velocity here, and move ship on update
+  player->SetVelocity(x, y);
+}
+
 
 Shape* Board::SpawnShape(Random* random)
 {
@@ -137,4 +147,9 @@ std::unordered_map<Shape*, Shape*>  Board::GetShapes() const
 std::unordered_map<Bullet*, Bullet*> Board::GetBullets() const
 {
   return bullets;
+}
+
+Player* Board::GetPlayer() const
+{
+  return player;
 }

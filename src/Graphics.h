@@ -24,6 +24,6 @@ class Graphics {
     static SDL_Event event;
     SDL_Window *window;
 
-    bool ProcessInput(int& x, int& y);
+    bool ProcessInput(int& mouseX, int& mouseY, int& playerX, int&playerY );
     void Render(Board* board) const;
 };

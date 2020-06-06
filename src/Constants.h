@@ -7,9 +7,10 @@
 const unsigned int WINDOW_WIDTH = 1000;
 const unsigned int WINDOW_HEIGHT = 500;
 
-const float BRICK_SPEED = 60.0f;
 const float BULLET_SPEED = 600.0f;
+const float SHIP_SPEED   = 500.0f;
 
+const unsigned int PLAYER_SIZE = 20;
 const unsigned int BRICK_SIZE = 20;
 const unsigned int GRACE = 1;
 const unsigned int BULLET_SIZE = 5;

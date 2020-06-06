@@ -49,7 +49,7 @@ Graphics::~Graphics()
   SDL_Quit();
 }
 
-bool Graphics::ProcessInput(int& x, int& y){
+bool Graphics::ProcessInput(int& mouseX, int& mouseY, int& playerX, int& playerY){
 
   SDL_PollEvent(&event);
   switch(event.type)
@@ -64,12 +64,29 @@ bool Graphics::ProcessInput(int& x, int& y){
       {
         return false;
       }
+      // move player
+      if (event.key.keysym.sym == SDLK_UP)
+      {
+        playerY-=1;
+      }
+      if (event.key.keysym.sym == SDLK_DOWN)
+      {
+        playerY+=1;
+      }
+      if (event.key.keysym.sym == SDLK_LEFT)
+      {
+        playerX-=1;
+      }
+      if (event.key.keysym.sym == SDLK_RIGHT)
+      {
+        playerX+=1;
+      }
     }
     case SDL_MOUSEBUTTONDOWN:
     {
         int x_; int y_;
         SDL_GetMouseState(&x_, &y_);
-        x = x_; y = y_;
+        mouseX = x_; mouseY = y_;
         return true;
     }
     default: {break;}
@@ -160,6 +177,16 @@ void Graphics::RenderBoard(Board* board) const {
       SDL_RenderFillRect(renderer, &bullet);
     }
   }
+
+  // draw player
+  Player* player = board->GetPlayer();
+  SDL_Rect p;
+  p.x = player->position.x;
+  p.y = player->position.y;
+  p.w = player->size;
+  p.h = player->size;
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  SDL_RenderFillRect(renderer, &p);
 
 }
 
