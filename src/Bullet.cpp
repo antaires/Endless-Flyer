@@ -3,15 +3,15 @@
 
 #include <iostream>
 
-Bullet::Bullet(float x, float y, int size): size(size)
+Bullet::Bullet(float x, float y, float posX, float posY, int size): size(size)
 {
   isActive = true;
 
   target.x = x;
   target.y = y;
 
-  position.x = (float) (WINDOW_WIDTH / 2);
-  position.y = (float) WINDOW_HEIGHT;
+  position.x = posX;
+  position.y = posY;
 
   velocity = glm::normalize(target-position);
 }

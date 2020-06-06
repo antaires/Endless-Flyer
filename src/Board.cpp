@@ -36,7 +36,7 @@ void Board::Update(float deltaTime)
 
 void Board::FireBullet(int x, int y)
 {
-  Bullet* bullet = new Bullet(x, y, BULLET_SIZE);
+  Bullet* bullet = new Bullet(x, y, player->position.x, player->position.y, BULLET_SIZE);
   bullets[bullet] = bullet;
 }
 

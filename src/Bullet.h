@@ -13,7 +13,7 @@ public:
   int size;
   bool isActive;
 
-  Bullet(float x, float y, int size);
+  Bullet(float x, float y, float posX, float posY, int size);
   void Update(float deltaTime);
   void Kill();
   bool IsActive() const;
