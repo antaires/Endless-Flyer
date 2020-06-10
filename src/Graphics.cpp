@@ -38,6 +38,11 @@ Graphics::Graphics(int w, int h): width(w), height(h)
     return;
   }
   //font = LoadFont();
+
+  // load textures for asteroids and ship
+  shipTexture = LoadTexture("./assets/images/ship.png");
+  asteroidTexture = LoadTexture("./assets/images/asteroid_fire.png");
+
 }
 
 Graphics::~Graphics()
@@ -67,21 +72,46 @@ bool Graphics::ProcessInput(int& mouseX, int& mouseY, int& playerX, int& playerY
       // move player
       if (event.key.keysym.sym == SDLK_UP)
       {
+        if (playerY > 0){playerY == 0;}
         playerY-=1;
       }
       if (event.key.keysym.sym == SDLK_DOWN)
       {
+        if (playerY < 0){playerY == 0;}
         playerY+=1;
       }
       if (event.key.keysym.sym == SDLK_LEFT)
       {
+        if (playerX > 0){playerX == 0;}
         playerX-=1;
       }
       if (event.key.keysym.sym == SDLK_RIGHT)
       {
+        if (playerX < 0){playerX == 0;}
         playerX+=1;
       }
     }
+    case SDL_KEYUP:
+    {
+      // move player
+      if (event.key.keysym.sym == SDLK_UP)
+      {
+        if (playerY < 0){playerY == 0;}
+      }
+      if (event.key.keysym.sym == SDLK_DOWN)
+      {
+        if (playerY > 0){playerY == 0;}
+      }
+      if (event.key.keysym.sym == SDLK_LEFT)
+      {
+        if (playerX < 0){playerX == 0;}
+      }
+      if (event.key.keysym.sym == SDLK_RIGHT)
+      {
+        if (playerX > 0){playerX == 0;}
+      }
+    }
+
     case SDL_MOUSEBUTTONDOWN:
     {
         int x_; int y_;
@@ -137,6 +167,9 @@ void Graphics::Render(Board* board) const {
 
 void Graphics::RenderBoard(Board* board) const {
 
+  // TODO to draw textures use:
+  // SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 0.0, NULL, flip);
+
   // background
   SDL_Rect rect;
   rect.x = 0;
@@ -146,19 +179,29 @@ void Graphics::RenderBoard(Board* board) const {
   SDL_SetRenderDrawColor(renderer, 65, 112, 100, 255);
   SDL_RenderFillRect(renderer, &rect);
 
-  // draw shapes
+  SDL_Rect source;
+  source.x = 0;
+  source.y = 0;
+  source.w = 200;
+  source.h = 200;
+
+  // draw asteroids
   auto shapes = board->GetShapes();
   for(auto itShapes = shapes.begin(); itShapes != shapes.end(); itShapes++)
   {
     Shape* shape = itShapes->first;
     // todo check if active
-    SDL_Rect s;
-    s.x = shape->position.x;
-    s.y = shape->position.y;
-    s.w = shape->width;
-    s.h = shape->height;
-    SDL_SetRenderDrawColor(renderer, shape->red, shape->green, shape->blue, 255);
-    SDL_RenderFillRect(renderer, &s);
+
+    SDL_Rect destination;
+    destination.x = shape->position.x;
+    destination.y = shape->position.y;
+    destination.w = shape->width;
+    destination.h = shape->height;
+    //SDL_SetRenderDrawColor(renderer, shape->red, shape->green, shape->blue, 255);
+    //SDL_RenderFill Rect(renderer, &s);
+
+    // use texture
+    SDL_RenderCopyEx(renderer, asteroidTexture, &source, &destination, 0.0, NULL, SDL_FLIP_NONE);
   }
 
   //draw bullets
@@ -180,14 +223,24 @@ void Graphics::RenderBoard(Board* board) const {
 
   // draw player
   Player* player = board->GetPlayer();
-  SDL_Rect p;
-  p.x = player->position.x;
-  p.y = player->position.y;
-  p.w = player->size;
-  p.h = player->size;
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-  SDL_RenderFillRect(renderer, &p);
+  SDL_Rect destination;
+  destination.x = player->position.x;
+  destination.y = player->position.y;
+  destination.w = player->size;
+  destination.h = player->size;
+  //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  //SDL_RenderFillRect(renderer, &p);
+  SDL_RenderCopyEx(renderer, shipTexture, &source, &destination, 0.0, NULL, SDL_FLIP_NONE);
 
+}
+
+SDL_Texture* Graphics::LoadTexture(const char* fileName)
+{ // old school C string type, not C++ strings for filePath
+  // TODO - rename fileName to filePath?
+  SDL_Surface* surface = IMG_Load(fileName);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_FreeSurface(surface);
+  return texture;
 }
 
 /*

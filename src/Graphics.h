@@ -14,9 +14,12 @@ class Graphics {
   private:
     int width;
     int height;
+    SDL_Texture* shipTexture;
+    SDL_Texture* asteroidTexture;
     TTF_Font* font;
     TTF_Font* LoadFont();
     void RenderBoard(Board* board) const;
+    SDL_Texture* LoadTexture(const char* fileName);
   public:
     Graphics(int width, int height);
     ~Graphics();
