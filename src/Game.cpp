@@ -42,9 +42,10 @@ void Game::Update()
   }
 
   // process ProcessInput
-  int mouseX = -1, mouseY = -1, playerX = 0, playerY = 0;
-  if (!graphics->ProcessInput(mouseX, mouseY, playerX, playerY)){isRunning = false;}
-  if (mouseX > 0 && mouseY > 0)
+  int playerX = 0, playerY = 0;
+  bool fired = false;
+  if (!graphics->ProcessInput(mouseX, mouseY, fired, playerX, playerY)){isRunning = false;}
+  if (fired)
   {
     board->FireBullet(mouseX, mouseY);
   }
@@ -53,12 +54,8 @@ void Game::Update()
 
   board->CheckCollisions();
 
-  /* TODO: handle score by time / destroying asteroids / pickups
-  if ( board->CheckRows() )
-  {
-    score++; // TODO: display score / UI
-    std::cout<<"\nscore: "<<score;
-  }*/
+  //TODO: handle score by time / destroying asteroids / pickups
+
 
   board->Update(deltaTime);
 
@@ -68,7 +65,7 @@ void Game::Update()
 
 void Game::Render() const
 {
-  graphics->Render(board);
+  graphics->Render(board, mouseX, mouseY);
 }
 
 bool Game::IsRunning() const

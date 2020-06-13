@@ -18,7 +18,7 @@ class Graphics {
     SDL_Texture* asteroidTexture;
     TTF_Font* font;
     TTF_Font* LoadFont();
-    void RenderBoard(Board* board) const;
+    void RenderBoard(Board* board, int mouseX, int mouseY) const;
     SDL_Texture* LoadTexture(const char* fileName);
   public:
     Graphics(int width, int height);
@@ -27,6 +27,6 @@ class Graphics {
     static SDL_Event event;
     SDL_Window *window;
 
-    bool ProcessInput(int& mouseX, int& mouseY, int& playerX, int&playerY );
-    void Render(Board* board) const;
+    bool ProcessInput(int& mouseX, int& mouseY, bool& fired, int& playerX, int&playerY );
+    void Render(Board* board, int mouseX, int mouseY) const;
 };

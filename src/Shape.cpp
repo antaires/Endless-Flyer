@@ -10,8 +10,8 @@ Shape::Shape(Random* random, float prevPos)
   float yOrigin = prevPos;
 
 
-  height = random->GetRand(20, 50);
-  width  = random->GetRand(20, 50);
+  height = random->GetRand(30, 70);
+  width  = height;
 
   while (std::abs(yOrigin - prevPos) < height * 5)
   {

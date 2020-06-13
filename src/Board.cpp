@@ -106,6 +106,7 @@ void Board::CheckCollisions()
   RemoveDeadShapes();
 }
 
+// TODO: make template
 bool Board::CollisionShape(Shape* shape, Bullet* bullet) const
 {
   if (shape->position.x < bullet->position.x + bullet->size &&

@@ -10,6 +10,8 @@ const unsigned int WINDOW_HEIGHT = 500;
 const float BULLET_SPEED = 600.0f;
 const float SHIP_SPEED   = 500.0f;
 
+const float PI = 3.14159265359f;
+
 const unsigned int PLAYER_SIZE = 20;
 const unsigned int BRICK_SIZE = 20;
 const unsigned int GRACE = 1;

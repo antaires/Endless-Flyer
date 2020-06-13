@@ -13,6 +13,8 @@ class Game {
     float ticksLastFrame;
     int score;
     Random* random;
+    int mouseX;
+    int mouseY;
   public:
     Game(int w, int h);
     ~Game();

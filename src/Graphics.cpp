@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <math.h>
+#include "../lib/glm/glm.hpp"
 
 SDL_Renderer* Graphics::renderer;
 SDL_Event Graphics::event;
@@ -54,7 +56,11 @@ Graphics::~Graphics()
   SDL_Quit();
 }
 
-bool Graphics::ProcessInput(int& mouseX, int& mouseY, int& playerX, int& playerY){
+bool Graphics::ProcessInput(int& mouseX, int& mouseY, bool& fired, int& playerX, int& playerY){
+
+  int x_; int y_;
+  SDL_GetMouseState(&x_, &y_);
+  mouseX = x_; mouseY = y_;
 
   SDL_PollEvent(&event);
   switch(event.type)
@@ -114,13 +120,12 @@ bool Graphics::ProcessInput(int& mouseX, int& mouseY, int& playerX, int& playerY
 
     case SDL_MOUSEBUTTONDOWN:
     {
-        int x_; int y_;
-        SDL_GetMouseState(&x_, &y_);
-        mouseX = x_; mouseY = y_;
-        return true;
+      fired = true;
+      return true;
     }
     default: {break;}
   }
+
   return true;
 
   /*
@@ -140,7 +145,7 @@ bool Graphics::ProcessInput(int& mouseX, int& mouseY, int& playerX, int& playerY
   */
 }
 
-void Graphics::Render(Board* board) const {
+void Graphics::Render(Board* board, int mouseX, int mouseY) const {
   SDL_SetRenderDrawColor(renderer, 65, 112, 100, 255);
   // clear back buffer
   SDL_RenderClear(renderer);
@@ -159,13 +164,13 @@ void Graphics::Render(Board* board) const {
     default:
       break;
   } */
-  RenderBoard(board);
+  RenderBoard(board, mouseX, mouseY);
 
   // swap buffers and render
   SDL_RenderPresent(renderer);
 }
 
-void Graphics::RenderBoard(Board* board) const {
+void Graphics::RenderBoard(Board* board, int mouseX, int mouseY) const {
 
   // TODO to draw textures use:
   // SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, 0.0, NULL, flip);
@@ -230,7 +235,23 @@ void Graphics::RenderBoard(Board* board) const {
   destination.h = player->size;
   //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   //SDL_RenderFillRect(renderer, &p);
-  SDL_RenderCopyEx(renderer, shipTexture, &source, &destination, 0.0, NULL, SDL_FLIP_NONE);
+  glm::vec2 mousePos = {mouseX, mouseY};
+  glm::vec2 pointAtMouse = player->position - mousePos;
+
+  double deltaY = player->position.y - mousePos.y;
+  double deltaX = mousePos.x - player->position.x;
+  double angle  = atan2(deltaY, deltaX) * 180 / PI;
+  double rotationAngle = (angle < 0) ? (360 + angle) : angle;
+
+  std::cout<<"\n MOUSE X: "<< mouseX << " Y: " << mouseY;
+  std::cout<<"\n SHIP  X: "<< player->position.x << " Y: " << player->position.y;
+  std::cout<<"\n ANGLE  : "<< rotationAngle;
+
+  //double dot = pointAtMouse.x * rightVec.x + pointAtMouse.y * rightVec.y;
+  //double det = pointAtMouse.x * rightVec.x - pointAtMouse.y * rightVec.y;
+  //double rotationAngle = atan2(det, dot) * 180 / PI;
+
+  SDL_RenderCopyEx(renderer, shipTexture, &source, &destination, rotationAngle, NULL, SDL_FLIP_NONE);
 
 }
 
