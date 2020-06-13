@@ -233,26 +233,11 @@ void Graphics::RenderBoard(Board* board, int mouseX, int mouseY) const {
   destination.y = player->position.y;
   destination.w = player->size;
   destination.h = player->size;
-  //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-  //SDL_RenderFillRect(renderer, &p);
-  glm::vec2 mousePos = {mouseX, mouseY};
-  glm::vec2 pointAtMouse = player->position - mousePos;
-
-  double deltaY = player->position.y - mousePos.y;
-  double deltaX = mousePos.x - player->position.x;
-  double angle  = atan2(deltaY, deltaX) * 180 / PI;
-  double rotationAngle = (angle < 0) ? (360 + angle) : angle;
-
-  std::cout<<"\n MOUSE X: "<< mouseX << " Y: " << mouseY;
-  std::cout<<"\n SHIP  X: "<< player->position.x << " Y: " << player->position.y;
-  std::cout<<"\n ANGLE  : "<< rotationAngle;
-
-  //double dot = pointAtMouse.x * rightVec.x + pointAtMouse.y * rightVec.y;
-  //double det = pointAtMouse.x * rightVec.x - pointAtMouse.y * rightVec.y;
-  //double rotationAngle = atan2(det, dot) * 180 / PI;
-
-  SDL_RenderCopyEx(renderer, shipTexture, &source, &destination, rotationAngle, NULL, SDL_FLIP_NONE);
-
+  // rotate ship towards mouse
+  double deltaY = player->position.y - mouseY;
+  double deltaX = player->position.x - mouseX;
+  double angle  = atan2(deltaY, deltaX) * 180 / PI + 180;
+  SDL_RenderCopyEx(renderer, shipTexture, &source, &destination, angle, NULL, SDL_FLIP_NONE);
 }
 
 SDL_Texture* Graphics::LoadTexture(const char* fileName)
