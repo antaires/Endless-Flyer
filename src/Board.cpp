@@ -45,7 +45,8 @@ void Board::FireBullet(int x, int y)
 void Board::MoveShip(int x, int y)
 {
   // set velocity here, and move ship on update
-  player->SetVelocity(x, y);
+  //player->SetVelocity(x, y);
+  player->UpdatePosition(x, y);
 }
 
 
@@ -94,6 +95,7 @@ void Board::CheckCollisions()
     Shape* shape = itShapes->first;
 
     // TODO COLLISION: PLAYER - ASTEROID
+
 
     // COLLISION SHAPE - BULLET
     Bullet* deadBullet = nullptr;

@@ -49,16 +49,10 @@ void Game::Update()
   {
     board->FireBullet(mouseX, mouseY);
   }
-  // move ship
   board->MoveShip(playerX, playerY);
-
   board->CheckCollisions();
-
   //TODO: handle score by time / destroying asteroids / pickups
-
-
   board->Update(deltaTime);
-
   // set game state
   // can increase speed etc based on score or time ...
 }

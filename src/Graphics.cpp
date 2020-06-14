@@ -44,7 +44,6 @@ Graphics::Graphics(int w, int h): width(w), height(h)
   // load textures for asteroids and ship
   shipTexture = LoadTexture("./assets/images/ship.png");
   asteroidTexture = LoadTexture("./assets/images/asteroid_fire.png");
-
 }
 
 Graphics::~Graphics()
@@ -78,25 +77,26 @@ bool Graphics::ProcessInput(int& mouseX, int& mouseY, bool& fired, int& playerX,
       // move player
       if (event.key.keysym.sym == SDLK_UP)
       {
-        if (playerY > 0){playerY == 0;}
+        //if (playerY > 0){playerY == 0;}
         playerY-=1;
       }
       if (event.key.keysym.sym == SDLK_DOWN)
       {
-        if (playerY < 0){playerY == 0;}
+        //if (playerY < 0){playerY == 0;}
         playerY+=1;
       }
       if (event.key.keysym.sym == SDLK_LEFT)
       {
-        if (playerX > 0){playerX == 0;}
+        //if (playerX > 0){playerX == 0;}
         playerX-=1;
       }
       if (event.key.keysym.sym == SDLK_RIGHT)
       {
-        if (playerX < 0){playerX == 0;}
+        //if (playerX < 0){playerX == 0;}
         playerX+=1;
       }
     }
+    /*
     case SDL_KEYUP:
     {
       // move player
@@ -116,12 +116,12 @@ bool Graphics::ProcessInput(int& mouseX, int& mouseY, bool& fired, int& playerX,
       {
         if (playerX > 0){playerX == 0;}
       }
-    }
+    }*/
+
 
     case SDL_MOUSEBUTTONDOWN:
     {
       fired = true;
-      return true;
     }
     default: {break;}
   }

@@ -15,6 +15,7 @@ public:
 
   Player();
   void SetVelocity(int x, int y);
+  void UpdatePosition(int x, int y);
   void Update(float deltaTime);
   void Kill();
   bool IsActive() const;
