@@ -17,7 +17,7 @@ public:
   int red;
   int green;
   int blue;
-  Shape(Random* random, float prevPos);
+  Shape(Random* random, float prevPosX, float prevPosY, glm::vec2& playerPos);
   void Update(float deltaTime);
   void Kill();
 };

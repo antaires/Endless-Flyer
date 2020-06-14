@@ -13,7 +13,8 @@
 class Board {
 private:
   Player* player;
-  float lastShapeSpawnPosition;
+  float lastShapeSpawnPositionX;
+  float lastShapeSpawnPositionY;
   // TODO: make smart pointers
   std::unordered_map<Shape*, Shape*> shapes;
   std::unordered_map<Bullet*, Bullet*> bullets;

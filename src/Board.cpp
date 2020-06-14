@@ -7,7 +7,8 @@
 
 Board::Board()
 {
-  lastShapeSpawnPosition = 0;
+  lastShapeSpawnPositionX = 0;
+  lastShapeSpawnPositionY = 0;
   player = new Player();
 }
 
@@ -49,11 +50,10 @@ void Board::MoveShip(int x, int y)
 
 Shape* Board::SpawnShape(Random* random)
 {
-  // add shape to list of active SHAPES
-
-  // TODO : change for horizontal movement
-  Shape* shape = new Shape(random, lastShapeSpawnPosition);
-  lastShapeSpawnPosition = shape->position.x;
+  // TODO add shape to list of active SHAPES
+  Shape* shape = new Shape(random, lastShapeSpawnPositionX, lastShapeSpawnPositionY, player->position);
+  lastShapeSpawnPositionX = shape->position.x;
+  lastShapeSpawnPositionY = shape->position.y;
   shapes[shape] = shape;
   return shape;
 }
