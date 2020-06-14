@@ -5,8 +5,9 @@
 #include <iostream>
 #include <cmath>
 
-Board::Board()
+Board::Board(Random* r)
 {
+  random = r;
   lastShapeSpawnPositionX = 0;
   lastShapeSpawnPositionY = 0;
   player = new Player();
@@ -48,14 +49,41 @@ void Board::MoveShip(int x, int y)
 }
 
 
-Shape* Board::SpawnShape(Random* random)
+Shape* Board::SpawnShape()
 {
   // TODO add shape to list of active SHAPES
-  Shape* shape = new Shape(random, lastShapeSpawnPositionX, lastShapeSpawnPositionY, player->position);
+  int size = random->GetRand(30, 100);
+
+  glm::vec2 pos;
+  bool side = (int) random->GetRand(0, 4);
+  if (side == 0)
+  {
+    pos.x = WINDOW_WIDTH - size;
+    pos.y = random->GetRand(0, WINDOW_HEIGHT - size);
+  } else if (side == 1){
+    pos.x = 0;
+    pos.y = random->GetRand(0, WINDOW_HEIGHT - size);
+  } else if (side == 2){
+    pos.x = random->GetRand(0, WINDOW_WIDTH - size);
+    pos.y = WINDOW_HEIGHT - size;
+  } else {
+    pos.x = random->GetRand(0, WINDOW_WIDTH - size);
+    pos.y = 0;
+  }
+
+  Shape* shape = new Shape(size, pos, player->position);
   lastShapeSpawnPositionX = shape->position.x;
   lastShapeSpawnPositionY = shape->position.y;
   shapes[shape] = shape;
   return shape;
+}
+
+
+Shape* Board::SpawnShapeExplosion(int size, glm::vec2& pos, glm::vec2& target)
+{
+  Shape* shapeExplosion = new Shape(size, pos, target);
+  shapes[shapeExplosion] = shapeExplosion;
+  return shapeExplosion;
 }
 
 void Board::CheckCollisions()
@@ -80,7 +108,20 @@ void Board::CheckCollisions()
             // TODO : KILL SHAPE
             bullet->Kill();
             deadBullet = bullet;
+
             shape->Kill();
+            // spawn explosion pieces
+            if (shape->width > 20)
+            {
+              for(int i = 0; i < 4; i++)
+              {
+                int size = (int) shape->width/4;
+                glm::vec2 target;
+                target.x = (int) random->GetRand(0, WINDOW_WIDTH);
+                target.y = (int) random->GetRand(0, WINDOW_HEIGHT);
+                SpawnShapeExplosion(size, shape->position, target);
+              }
+            }
 
             shapesToRemove[shape] = shape;
             continue; // TODO or break?

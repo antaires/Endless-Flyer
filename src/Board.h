@@ -13,6 +13,7 @@
 class Board {
 private:
   Player* player;
+  Random* random;
   float lastShapeSpawnPositionX;
   float lastShapeSpawnPositionY;
   // TODO: make smart pointers
@@ -25,10 +26,11 @@ private:
   void RemoveDeadBullets();
   void RemoveDeadShapes();
 public:
-  Board();
+  Board(Random* random);
   ~Board();
   void Update(float deltaTime);
-  Shape* SpawnShape(Random* random);
+  Shape* SpawnShape();
+  Shape* SpawnShapeExplosion(int size, glm::vec2& pos, glm::vec2& target);
   void FireBullet(int x, int y);
   void MoveShip(int x, int y);
   void CheckCollisions();

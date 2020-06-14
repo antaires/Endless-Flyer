@@ -10,12 +10,12 @@
 Game::Game(int w, int h) : isRunning(false), width(w), height(h)
 {
   // TODO: use smart pointer instead
-  board = new Board();
+  random = new Random();
+
+  board = new Board(random);
   graphics = new Graphics(width, height);
   ticksLastFrame;
   score = 0;
-
-  random = new Random();
 }
 
 Game::~Game()
@@ -38,7 +38,7 @@ void Game::Update()
 
   if ( random->GetRand(0, 31) < 3 )
   {
-    board->SpawnShape(random);
+    board->SpawnShape();
   }
 
   // process ProcessInput
