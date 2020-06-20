@@ -4,16 +4,16 @@
 #include <iostream>
 
 // window
-const unsigned int WINDOW_WIDTH = 1000;
-const unsigned int WINDOW_HEIGHT = 500;
+const unsigned int WINDOW_WIDTH = 1500;
+const unsigned int WINDOW_HEIGHT = 1000;
 
 const float BULLET_SPEED = 600.0f;
 const float SHIP_SPEED   = 500.0f;
 
 const float PI = 3.14159265359f;
 
-const unsigned int PLAYER_SIZE = 20;
-const unsigned int BRICK_SIZE = 20;
+const unsigned int PLAYER_SIZE = 70;
+const unsigned int BRICK_SIZE = 30;
 const unsigned int GRACE = 1;
 const unsigned int BULLET_SIZE = 5;
 

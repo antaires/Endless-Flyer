@@ -40,7 +40,6 @@ Graphics::Graphics(int w, int h): width(w), height(h)
     return;
   }
   //font = LoadFont();
-
   // load textures for asteroids and ship
   shipTexture = LoadTexture("./assets/images/ship.png");
   asteroidTexture = LoadTexture("./assets/images/asteroid_fire.png");
@@ -187,8 +186,8 @@ void Graphics::RenderBoard(Board* board, int mouseX, int mouseY) const {
   SDL_Rect source;
   source.x = 0;
   source.y = 0;
-  source.w = 200;
-  source.h = 200;
+  source.w = 400;
+  source.h = 400;
 
   // draw asteroids
   auto shapes = board->GetShapes();
